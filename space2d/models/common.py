@@ -14,6 +14,9 @@ class Position:
     x: float = 0.0
     y: float = 0.0
 
+    def asTuple(self):
+        return (self.x, self.y)
+
 
 @component
 class Renderable:

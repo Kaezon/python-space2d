@@ -4,7 +4,7 @@ from math import cos, sin
 import esper
 
 from .common import Position, Registry, Renderable
-from ..util import makeRect
+from ..util import makeRect, worldToScreenCoords, worldToScreenRect
 
 
 @component
@@ -59,9 +59,10 @@ class OrbitProcessor(esper.Processor):
                 position,
                 Position(x=extents[0], y=extents[1])
             )
+
             registry.get("screen")\
                 .blit(registry.get("background"),
-                      (position.x, position.y),
+                      worldToScreenCoords(position.asTuple()),
                       old_rect)
             registry.get("dirty_rects").append(old_rect)
 

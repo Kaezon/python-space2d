@@ -40,3 +40,17 @@ def worldToScreenCoords(coords: tuple) -> tuple:
         x - camera_position.x + screen_rect.centerx,
         y - camera_position.y + screen_rect.centery
     )
+
+def worldToScreenRect(rect: pygame.Rect) -> pygame.Rect:
+    """Transform Rect from world coords to screen coords.
+    Args:
+        rect (:obj:`pygame.Rect`): World coordinates to transform.
+    Returns:
+        (:obj:`pygame.Rect`)
+    """
+    camera_position = esper.component_for_entity(
+        Registry().get("activeCamera"), Camera2d).position
+    screen_rect = Registry().get("screen").get_rect()
+
+    return rect.move(-camera_position.x + screen_rect.centerx,
+                     -camera_position.y + screen_rect.centery)
