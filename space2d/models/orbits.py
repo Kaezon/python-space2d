@@ -55,16 +55,7 @@ class OrbitProcessor(esper.Processor):
             registry = Registry()
             # Add current position to dirty_rects and fill it with the background image
             extents = renderable.surface.get_size()
-            old_rect = makeRect(
-                position,
-                Position(x=extents[0], y=extents[1])
-            )
-
-            registry.get("screen")\
-                .blit(registry.get("background"),
-                      worldToScreenCoords(position.asTuple()),
-                      old_rect)
-            registry.get("dirty_rects").append(old_rect)
+            renderable.markDirty(makeRect(position, extents))
 
             # Set position to the calculated posiiton on the orbit elipse
             time = registry.get("time")
@@ -83,11 +74,7 @@ class OrbitProcessor(esper.Processor):
                          + orbit.center.y
 
             # Add new position to dirty_rects
-            registry.get("dirty_rects").append(
-                makeRect(
-                    position,
-                    Position(x=extents[0], y=extents[1]))
-            )
+            registry.get("dirty_rects").append(makeRect(position, extents))
 
 
 class StarSystem:

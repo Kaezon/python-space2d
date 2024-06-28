@@ -3,6 +3,8 @@ from typing import Any, Dict, Optional
 
 import pygame
 
+from ..util import makeRect
+
 
 @component
 class Position:
@@ -23,8 +25,24 @@ class Renderable:
     """A component for renderable objects.
     Attributes:
         surface (:obj:`pygame.Surface`): The renderable surface.
+        dirty (bool): Whether or not this renderable is dirty.
+        dirtyRect: The rect which represents the original area to be cleared.
     """
     surface: Optional[pygame.Surface] = None
+    dirty: bool = False
+    dirtyRect: Optional[pygame.Rect] = None
+
+    def markDirty(self, position: tuple[float, float]):
+        if not self.dirty:
+            self.dirty = True
+
+            extents = self.surface.get_size()
+            self.dirtyRect = makeRect(position, extents)
+
+    def markClean(self):
+        """Mark Renderable as clean."""
+        self.dirty = False
+        self.dirtyRect = None
 
 
 class Registry:

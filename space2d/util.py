@@ -15,16 +15,19 @@ def makeDotSurface(size: int) -> pygame.Surface:
     return surface
 
 
-def makeRect(origin: Position, extent: Position) -> pygame.Rect:
+def makeRect(origin: tuple[float, float],
+             extent: tuple[float, float]) -> pygame.Rect:
     """Create a rect using two :obj:`Position` objects.
     Args:
-        origin (:obj:`Position`): The coordinates of the top-left corner.
-        extent (:obj:`Position`): The size of the rect.
+        origin (float, float): The coordinates of the top-left corner.
+        extent (float, float): The size of the rect.
+    Returns:
+        :obj:`pygame.Rect`
     """
-    return pygame.Rect(origin.x, origin.y, extent.x, extent.y)
+    return pygame.Rect(origin[0], origin[1], extent[0], extent[1])
 
 
-def worldToScreenCoords(coords: tuple) -> tuple:
+def worldToScreenCoords(coords: tuple[float, float]) -> tuple:
     """Transform world coordinates to screen coordinates.
     Args:
         coords (float, float): World coordinates to transform.
